@@ -11,7 +11,7 @@ const CartScreen = () => {
   const [searchParams] = useSearchParams()
   const dispatch = useDispatch()
   const productId = params.id
-  const qty = Number(searchParams.get("qty"))
+  const qty = searchParams.get("qty") ? Number(searchParams.get("qty")) : 1
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
   useEffect(() => {
