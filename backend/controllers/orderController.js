@@ -1,7 +1,8 @@
 import asyncHandler from "express-async-handler"
 import Order from "../models/orderModel.js"
+import Product from "../models/productModel.js"
 
-//@desc     Create new order
+//@desc     Create new order and edit countInStock
 //@route    POST /api/orders
 //@access   Private
 const addOrderItems = asyncHandler(async (req, res) => {
@@ -31,6 +32,15 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     })
     const createdOrder = await order.save()
+
+    //edit countInStock after placing the order
+    orderItems.forEach(
+      asyncHandler(async (item) => {
+        const product = await Product.findById(item.product)
+        product.countInStock -= item.qty
+        await product.save()
+      })
+    )
     res.status(201).json(createdOrder)
   }
 })
