@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { useSearchParams, useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { Form, Button, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import FormContainer from "../components/FormContainer"
@@ -9,9 +9,9 @@ const PaymentScreen = () => {
   const navigate = useNavigate()
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
-  if (!shippingAddress) {
-    navigate("/shipping")
-  }
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const [paymentMethod, setPaymentMethod] = useState("PayPal")
 
   const dispatch = useDispatch()
@@ -20,6 +20,15 @@ const PaymentScreen = () => {
     dispatch(savePaymentMethod(paymentMethod))
     navigate("/placeorder")
   }
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login")
+    }
+    if (!shippingAddress) {
+      navigate("/shipping")
+    }
+  }, [navigate, userInfo, shippingAddress])
+
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />

@@ -12,6 +12,8 @@ const PlaceOrderScreen = () => {
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
   const cart = useSelector((state) => state.cart)
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   //Calculate prices
   const addDecimales = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
@@ -34,11 +36,15 @@ const PlaceOrderScreen = () => {
   }
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login")
+    }
     if (success) {
       navigate(`/orders/${order._id}`)
       dispatch({ type: ORDER_CREATE_RESET })
     }
-  }, [navigate, success, dispatch])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, success, dispatch, userInfo])
   const placeOrderHandler = () => {
     dispatch(
       createOrder({

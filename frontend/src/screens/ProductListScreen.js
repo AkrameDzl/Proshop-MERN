@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { LinkContainer } from "react-router-bootstrap"
 import { Table, Button, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
@@ -14,7 +14,6 @@ import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 
 const ProductListScreen = () => {
   const navigate = useNavigate()
-  const params = useParams()
   const dispatch = useDispatch()
 
   const productList = useSelector((state) => state.productList)

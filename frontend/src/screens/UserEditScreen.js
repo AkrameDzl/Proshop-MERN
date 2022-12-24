@@ -17,6 +17,8 @@ function UserEditScreen() {
   const [email, setEmail] = useState("")
   const [isAdmin, setIsAdmin] = useState(false)
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   const userDetails = useSelector((state) => state.userDetails)
   const { error, loading, user } = userDetails
 
@@ -27,11 +29,14 @@ function UserEditScreen() {
     success: successUpdate,
   } = userUpdate
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login")
+    }
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET })
       navigate("/admin/userlist")
     } else {
-      if (!user.name || user._id !== userId) {
+      if (!user || !user.name || user._id !== userId) {
         dispatch(getUserDetails(userId))
       } else {
         setName(user.name)
@@ -39,7 +44,7 @@ function UserEditScreen() {
         setIsAdmin(user.isAdmin)
       }
     }
-  }, [user, userId, successUpdate, navigate, dispatch])
+  }, [user, userId, successUpdate, navigate, dispatch, userInfo])
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(updateUser({ _id: user._id, name, email, isAdmin }))

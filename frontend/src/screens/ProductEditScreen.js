@@ -26,6 +26,9 @@ function ProductEditScreen() {
   const productDetails = useSelector((state) => state.productDetails)
   const { error, loading, product } = productDetails
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
     error: errorUpdate,
@@ -34,6 +37,9 @@ function ProductEditScreen() {
   } = productUpdate
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login")
+    }
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
       navigate("/admin/productlist")
@@ -50,7 +56,7 @@ function ProductEditScreen() {
         setDescription(product.description)
       }
     }
-  }, [productId, product, navigate, dispatch, successUpdate])
+  }, [productId, product, navigate, dispatch, successUpdate, userInfo])
 
   const uploadingFileHandler = async (e) => {
     const file = e.target.files[0]
