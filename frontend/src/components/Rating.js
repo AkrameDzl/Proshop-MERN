@@ -2,7 +2,7 @@ import React from "react"
 
 const Rating = ({ value, text, color }) => {
   return (
-    <div className='raing'>
+    <div className='rating'>
       <span>
         <i
           style={{ color }}
