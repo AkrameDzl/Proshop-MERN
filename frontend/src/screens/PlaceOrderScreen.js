@@ -6,6 +6,8 @@ import Message from "../components/Message"
 import CheckoutSteps from "../components/CheckoutSteps"
 import { createOrder } from "../actions/orderActions"
 import { ORDER_CREATE_RESET } from "../constants/orderConstants"
+import Meta from "../components/Meta"
+
 const PlaceOrderScreen = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -60,8 +62,8 @@ const PlaceOrderScreen = () => {
   }
   return (
     <>
+      <Meta title='Place Order' />
       <CheckoutSteps step1 step2 step3 step4 />
-
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>

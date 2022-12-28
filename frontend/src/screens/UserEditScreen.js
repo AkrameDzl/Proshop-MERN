@@ -7,6 +7,7 @@ import Message from "../components/Message"
 import FormContainer from "../components/FormContainer"
 import { getUserDetails, updateUser } from "../actions/userActions"
 import { USER_UPDATE_RESET } from "../constants/userConstants"
+import Meta from "../components/Meta"
 
 function UserEditScreen() {
   const params = useParams()
@@ -51,7 +52,8 @@ function UserEditScreen() {
   }
 
   return (
-    <div>
+    <>
+      <Meta title='Admin | Edit User informations' />
       <Link to='/admin/userlist' className='btn btn-dark my-3'>
         Go Back
       </Link>
@@ -100,7 +102,7 @@ function UserEditScreen() {
           </Form>
         )}
       </FormContainer>
-    </div>
+    </>
   )
 }
 

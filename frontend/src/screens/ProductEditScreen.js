@@ -8,6 +8,7 @@ import Message from "../components/Message"
 import FormContainer from "../components/FormContainer"
 import { listProductDetails, updateProduct } from "../actions/productActions"
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
+import Meta from "../components/Meta"
 
 function ProductEditScreen() {
   const params = useParams()
@@ -39,7 +40,10 @@ function ProductEditScreen() {
   useEffect(() => {
     if (!userInfo) {
       navigate("/login")
+    } else if (!userInfo.isAdmin) {
+      navigate("/login")
     }
+
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
       navigate("/admin/productlist")
@@ -96,7 +100,8 @@ function ProductEditScreen() {
   }
 
   return (
-    <div>
+    <>
+      <Meta title='Admin | Edit Product informations' />
       <Link to='/admin/productlist' className='btn btn-dark my-3'>
         Go Back
       </Link>
@@ -187,7 +192,7 @@ function ProductEditScreen() {
           </Form>
         )}
       </FormContainer>
-    </div>
+    </>
   )
 }
 

@@ -12,6 +12,7 @@ import {
   createProduct,
 } from "../actions/productActions"
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
+import Meta from "../components/Meta"
 
 const ProductListScreen = () => {
   const params = useParams()
@@ -44,7 +45,10 @@ const ProductListScreen = () => {
     dispatch({ type: PRODUCT_CREATE_RESET })
     if (!userInfo) {
       navigate("/login")
+    } else if (!userInfo.isAdmin) {
+      navigate("/login")
     }
+
     if (successCreate) {
       navigate(`/admin/product/${createdProduct._id}/edit`)
     } else {
@@ -71,6 +75,7 @@ const ProductListScreen = () => {
   }
   return (
     <>
+      <Meta title='Admin | Products List' />
       <Row className='align-items-center'>
         <Col>
           <h1>Products</h1>
